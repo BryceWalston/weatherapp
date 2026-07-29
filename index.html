@@ -19,12 +19,34 @@
          <input type="text" name="city-text" placeholder="city"/>
          <input type="submit" value="submit">
 
-
       </form>
 
+      <script>
+
+
+         async function getLocation(){
+            let URL = "https://geocoding-api.open-meteo.com/v1/search?name=Chicago&count=10&language=en&format=json";
+
+            let response = await fetch(URL);
+
+            let result = await response.text();
+
+            alert(result);
+         }
+
+         getLocation();
+
+
+
+      </script>
 
 
 
 
    </body>
+
+
+
+
+
 </html>
