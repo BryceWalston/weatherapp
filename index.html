@@ -33,7 +33,8 @@
                let resultJSON = await response.json();
 
                for(let item of resultJSON.results){
-                  console.log(item.name + ", " + item.country + ": longitude: " + item.longitude + " latitude: " + item.latitude);
+                  let child = document.body.appendChild(document.createElement("p"));
+                  child.textContent = `${item.name}, ${item.country} longitude: ${item.longitude} latitude: ${item.latitude}`;
                }
             }
             catch(error){
