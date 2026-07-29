@@ -42,7 +42,13 @@
 
          }
 
-         getCityCoords("Washington");
+         const paramsString = window.location.search;
+         
+         const searchParams = new URLSearchParams(paramsString);
+
+         let city = (searchParams.get("city-text"));
+
+         getCityCoords(city);
 
 
 
