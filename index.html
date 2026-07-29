@@ -24,17 +24,28 @@
       <script>
 
 
-         async function getLocation(){
-            let URL = "https://geocoding-api.open-meteo.com/v1/search?name=Chicago&count=10&language=en&format=json";
+         async function getCityCoords(city){
+            try{
+               let URL = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`;
 
-            let response = await fetch(URL);
+               let response = await fetch(URL);
 
-            let result = await response.text();
+               let resultJSON = await response.json();
 
-            alert(result);
+               for(let item of resultJSON.results){
+                  console.log(item.name + ", " + item.country + ": longitude: " + item.longitude + " latitude: " + item.latitude);
+               }
+            }
+            catch(error){
+               console.error("couldn't fetch city", error);
+            }
+
          }
 
-         getLocation();
+         getCityCoords("Washington");
+
+
+
 
 
 
