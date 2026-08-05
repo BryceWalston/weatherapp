@@ -47,6 +47,8 @@ async function cityCoordstoWeather(cityCoords){
 
         let timeArray = resultJSON[0].hourly.time;
 
+        let cityIndex = 0; 
+
         //we need to process the datetime to just have the time portion.
         timeArray = datetimetoTime(timeArray); 
 
@@ -62,6 +64,7 @@ async function cityCoordstoWeather(cityCoords){
             if(head){
                 let tableHead = displayTable.createTHead();
                 let row = tableHead.insertRow();
+                row.insertCell(); //insert blank cell for formatting.
                 for(let i = 0; i < timeArray.length; ++i){
                     let cell = row.insertCell();
                     cell.innerHTML = `<b>${timeArray[i]}</b>`;
@@ -73,6 +76,12 @@ async function cityCoordstoWeather(cityCoords){
             //console.log(JSON.stringify(cityWeather.hourly.temperature_2m));
             let row = displayTable.insertRow();
 
+            //lets assume the API returns weather data by the passed in longitude/latitudes. 
+            let cell = row.insertCell();
+
+            cell.innerHTML = `${cityCoords[cityIndex].name}, ${cityCoords[cityIndex].country}`;
+
+
             //add a cell for each weather entry.
             for(let i = 0; i < cityWeather.hourly.temperature_2m.length; ++i){
                 let cell = row.insertCell();
@@ -82,7 +91,7 @@ async function cityCoordstoWeather(cityCoords){
             }
 
 
-
+            ++cityIndex;
         }
   
 
@@ -112,7 +121,7 @@ try{
         let child = document.body.appendChild(document.createElement("p"));
         child.textContent = `${item.name}, ${item.country} longitude: ${item.longitude} latitude: ${item.latitude}`;
         */
-        cityCoords.push(new CityCoords(item.longitude, item.latitude, item.name, item.country_code));
+        cityCoords.push(new CityCoords(item.longitude, item.latitude, item.name, item.country));
         
 
     }
