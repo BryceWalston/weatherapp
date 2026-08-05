@@ -27,17 +27,49 @@ async function cityCoordstoWeather(cityCoords){
         longitudeString = longitudeString.slice(0,-1); //cut off last comma.
         latitudeString = latitudeString.slice(0,-1);
 
-        let URL = `https://api.open-meteo.com/v1/forecast?longitude=${longitudeString}&latitude=${latitudeString}&hourly=temperature_2m`;
+        let URL = `https://api.open-meteo.com/v1/forecast?longitude=${longitudeString}&latitude=${latitudeString}&hourly=temperature_2m&forecast_days=1`;
 
 
         let response = await fetch(URL);
 
-        let resultJSON = await response.text();
+        let resultJSON = await response.json();
+
+        let displayTable = document.getElementById("weather_display");//getElementById??? is that an android reference?????!??
+
+        let head = true;
 
         //resultJSON contains an array of structs.
+        //we have a days worth of weather data for the 10 cities, format it in a table and add it to the html document.
+        for(cityWeather of resultJSON){
 
-        //test if we get results.
-        console.log(resultJSON);
+            //this part adds a header which displays the various times the weather data was taken.
+            //TODO: make a trim time function that only takes the number after the T as that is the time. 
+            //we can use the number before the T as the date. Make a header like weather for the day of #-#-#...
+            //but first we need to find out how to display the city on the left of the weather data.
+            if(head){
+                let tableHead = displayTable.createTHead();
+                let row = tableHead.insertRow();
+                for(let i = 0; i < cityWeather.hourly.time.length; ++i){
+                    let cell = row.insertCell();
+                    cell.innerHTML = cityWeather.hourly.time[i];
+                }
+            }
+
+
+            //console.log(JSON.stringify(cityWeather.hourly.temperature_2m));
+            let row = displayTable.insertRow();
+
+            //add a cell for each weather entry.
+            for(let i = 0; i < cityWeather.hourly.temperature_2m.length; ++i){
+                let cell = row.insertCell();
+                cell.innerHTML = cityWeather.hourly.temperature_2m[i] + "\u00B0C";
+
+
+            }
+
+
+
+        }
 
 
 
