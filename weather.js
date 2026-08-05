@@ -38,6 +38,12 @@ async function cityCoordstoWeather(cityCoords){
 
         let head = true;
 
+        let timeArray = resultJSON[0].hourly.time;
+
+        //we need to process the datetime to just have the time portion.
+        timeArray = datetimetoTime(timeArray); 
+
+
         //resultJSON contains an array of structs.
         //we have a days worth of weather data for the 10 cities, format it in a table and add it to the html document.
         for(cityWeather of resultJSON){
@@ -49,9 +55,9 @@ async function cityCoordstoWeather(cityCoords){
             if(head){
                 let tableHead = displayTable.createTHead();
                 let row = tableHead.insertRow();
-                for(let i = 0; i < cityWeather.hourly.time.length; ++i){
+                for(let i = 0; i < timeArray.length; ++i){
                     let cell = row.insertCell();
-                    cell.innerHTML = cityWeather.hourly.time[i];
+                    cell.innerHTML = timeArray[i];
                 }
             }
 
@@ -109,6 +115,28 @@ catch(error){
 }
 
 }
+
+//datetime in this format has the dates and times separated by a T.
+function datetimetoTime(datetime){
+
+    //lets try and use regex for this.
+    //I think it would be a good use for it.
+
+    let time = [];
+
+    for(let i = 0; i < datetime.length; ++i){
+
+        //split based on the T designator.
+        time.push(datetime[i].split(/[T]/i)[1]);
+
+    }
+
+    return time;
+
+}
+
+
+
 
 const paramsString = window.location.search;
 
