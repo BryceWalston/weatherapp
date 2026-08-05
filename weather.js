@@ -57,8 +57,9 @@ async function cityCoordstoWeather(cityCoords){
                 let row = tableHead.insertRow();
                 for(let i = 0; i < timeArray.length; ++i){
                     let cell = row.insertCell();
-                    cell.innerHTML = timeArray[i];
+                    cell.innerHTML = `<b>${timeArray[i]}</b>`;
                 }
+                head = false;
             }
 
 
