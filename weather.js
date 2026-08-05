@@ -1,6 +1,14 @@
-//set up coordinates map(longitude,latitude);
-//consider downloading a multimap package to account for results that return multiple cities with the same longitude.
-const coordinates = new Map();
+//make a class for CityCoords objects
+class CityCoords{
+    constructor(longitude, latitude, name, country){
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.name = name;
+        this.country = country;
+    }
+}
+
+let coordinates = [];
 
 async function cityCoordstoWeather(cityCoords){
 
@@ -8,17 +16,16 @@ async function cityCoordstoWeather(cityCoords){
 
     try{
 
-
         let longitudeString = "";
         let latitudeString = "";
 
         //value,key for forEach loops.
-        cityCoords.forEach((latitude,longitude)=>{
+        for(let i = 0; i < cityCoords.length; ++i){
 
-            longitudeString += longitude + ",";
-            latitudeString += latitude + ",";
+            longitudeString += cityCoords[i].longitude + ",";
+            latitudeString += cityCoords[i].latitude + ",";
 
-        });
+        };
 
 
         //strings in JS are immutable.
@@ -77,8 +84,7 @@ async function cityCoordstoWeather(cityCoords){
 
 
         }
-
-
+  
 
     }
     catch(error){
@@ -106,10 +112,11 @@ try{
         let child = document.body.appendChild(document.createElement("p"));
         child.textContent = `${item.name}, ${item.country} longitude: ${item.longitude} latitude: ${item.latitude}`;
         */
-        cityCoords.set(item.longitude,item.latitude);
+        cityCoords.push(new CityCoords(item.longitude, item.latitude, item.name, item.country_code));
         
 
     }
+
 }
 catch(error){
     console.error("couldn't fetch city", error);
