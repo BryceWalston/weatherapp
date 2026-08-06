@@ -79,8 +79,15 @@ async function cityCoordstoWeather(cityCoords){
             //lets assume the API returns weather data by the passed in longitude/latitudes. 
             let cell = row.insertCell();
 
-            cell.innerHTML = `${cityCoords[cityIndex].name}, ${cityCoords[cityIndex].country}`;
-
+            cell.innerHTML = `${cityCoords[cityIndex].name}`;
+            //check if the country is defined. For some territories such as Puerto Rico, the country will come back as undefined.
+            if(cityCoords[cityIndex].country){
+                cell.innerHTML += `, ${cityCoords[cityIndex].country}`;
+            }
+            //otherwise just attach the latitude longitude.
+            else{
+                cell.innerHTML += `(${cityCoords[cityIndex].latitude}, ${cityCoords[cityIndex].longitude})`;
+            }
 
             //add a cell for each weather entry.
             for(let i = 0; i < cityWeather.hourly.temperature_2m.length; ++i){
