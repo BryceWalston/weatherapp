@@ -7,3 +7,20 @@ p1{
     margin: 0px;
     padding: 0px;
 }
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+table,th,td{
+    background-color: white;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+/* padding is inside margin is outside.*/
+th,td{
+
+    padding: 5px;
+
+}
